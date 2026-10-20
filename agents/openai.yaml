@@ -1,0 +1,7 @@
+interface:
+  display_name: "千金少爷P图Skills"
+  short_description: "保留人物辨识度与环境视角，处理尺度、受光、手机直闪和阴影，再给融合参考分。"
+  default_prompt: "使用 $qianjin-shaoye-photo-skills，把指定人像自然放进参考环境，保留原视角与光色，按我的要求处理闪光并审图评分。"
+
+policy:
+  allow_implicit_invocation: true
