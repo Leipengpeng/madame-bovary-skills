@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "mode": "direct_scene_generation",
+  "inputs": {
+    "environment": "/workspace/inputs/environment.png",
+    "identity_reference": "/workspace/inputs/assigned_identity.png"
+  },
+  "identity": {
+    "reference_mode": "single_reference",
+    "preserve": ["Actual face shape and relative eye, nose, lip and jaw proportions", "Natural skin albedo, age impression, hair identity and distinctive eyewear"],
+    "ignore_source_conditions": ["Source room/background, color cast, expression strain and phone-lens distortion", "Source-only earbuds, phone, microphone and unrelated props"]
+  },
+  "composition": {
+    "environment_fov_locked": true,
+    "anchors": ["Keep existing window-frame intersections and table edges at their original image coordinates"],
+    "placement": "Example only: seated at the available right-hand seat, behind the existing table; choose a coherent head/torso scale from chair and table, not an arbitrary small face",
+    "pose": "Relaxed closed-mouth expression toward the taking camera; one forearm can rest naturally beside the plate",
+    "outfit": "Example text-only outfit: dark short-sleeved shirt with subtle pale abstract printed patches",
+    "occlusion_and_crop": "Table naturally occludes seated lower body. Do not shrink furniture or distort body parts to fit. Feet may be outside the frame."
+  },
+  "analysis": {
+    "scene_evidence": [
+      {"id": "E1", "source_domain": "real_scene", "region": "Existing table and solid interior frame", "observation": "EXAMPLE observation: warm local highlights on table; distant exterior darker and cooler", "inference": "EXAMPLE hypothesis: warm interior ambient contribution with weak cool exterior fill; replace after actually viewing the chosen image", "confidence": "low"}
+    ],
+    "unknowns": ["Actual room dimensions, lamp position and physical camera settings are unmeasured", "This template is a worked example, not image analysis; rewrite all scene-dependent entries"]
+  },
+  "lighting_mode": "direct_phone_flash",
+  "environment_lighting": {
+    "sources": [
+      {"id": "L1", "geometry_type": "area", "transport": "diffuse_bounce", "role": "ambient", "direction": {"image_space": "Broad interior fill; exact direction unknown", "depth": "Unknown; do not invent a visible lamp"}, "color": {"tendency": "Weak warm contribution in the example interior", "basis": "E1 is an illustrative authored observation, not a measured color temperature"}, "apparent_size": "Broad apparent reflection region; actual emitting size unknown", "evidence_ids": ["E1"], "confidence": "low"}
+    ]
+  },
+  "synthetic_lights": [
+    {"id": "F1", "kind": "phone_flash", "authority": "user_requested_synthetic", "position": "One small neutral phone LED near the taking lens, slightly above and image-right", "size": "Small emitter with modest lens-to-flash offset", "relative_strength": "Readily visible direct flash on subject while preserving existing ambient exposure", "falloff": "Near reachable table/hand surfaces can react more than the subject; distant exterior reacts negligibly", "color_response": "Neutral flash adds to the existing ambient color; it does not replace the whole scene white balance"}
+  ],
+  "background_light_exceptions": [
+    {"light_id": "F1", "region": "EXAMPLE reachable near table and solid chair surfaces only; revise this box after viewing the actual image", "box": [0.1, 0.55, 1.0, 1.0], "allowed_change": "Only local flash contribution and attached cast/contact shadows; distant exterior and original ambient illumination stay unchanged"}
+  ],
+  "shadow_tracking": {
+    "enabled": true,
+    "unknowns": ["The near-axis body shadow can hide on chair/solid frame; a transparent window is not an invented opaque receiving wall"],
+    "tracks": [
+      {"id": "S1", "light_id": "F1", "occluder": "Forearm and drinking-glass base near the table", "receiver": {"region": "Real tabletop immediately beneath and behind each object", "source_domain": "real_scene"}, "direction": "Short attached projection toward lower/image-left, consistent with the slightly upper-right flash", "softness": "Small-source transition, finite penumbra; not a broad studio shadow", "visibility": "visible", "attachment": "Begin at actual contact/projection geometry, never a detached copied silhouette", "confidence": "low", "evidence_ids": ["E1"]}
+    ]
+  },
+  "flash_geometry": {
+    "enabled": true,
+    "estimation": "qualitative_only",
+    "basis": "creative_hypothesis",
+    "basis_note": "Placement and distance ordering are authored examples, not recovered 3D measurements",
+    "receiver": "Real tabletop/solid seat surfaces; far exterior excluded",
+    "distance_relations": ["Taking camera/flash to near table props is shorter than to seated subject", "Far skyline is much farther than the interior subject; flash does not relight the skyline"]
+  },
+  "flash_detail_plan": {
+    "depth_layers": [
+      {"id": "D1", "layer": "foreground", "region": "Near table, hand and glass", "relative_distance": "Nearer to the lens than the seated torso", "flash_response": "Compact highlights where orientation permits and short attached table shadows", "confidence": "low", "evidence_ids": ["E1"]},
+      {"id": "D2", "layer": "subject", "region": "Seated person", "relative_distance": "Middle distance chosen for composition", "flash_response": "Coherent face, neck, arms and shirt illumination; keep local anatomical shading", "confidence": "low", "evidence_ids": []},
+      {"id": "D3", "layer": "background", "region": "Distant scene beyond window", "relative_distance": "Far beyond subject", "flash_response": "No visible flash-driven exposure, color, detail or sharpness change", "confidence": "low", "evidence_ids": ["E1"]}
+    ],
+    "shadow_links": [
+      {"track_id": "S1", "occluder_layer_id": "D1", "receiver_layer_id": "D1", "visibility_reason": "Near hand/prop geometry casts onto real tabletop; body cast shadow may be hidden"}
+    ],
+    "specular_surfaces": [
+      {"id": "R1", "region": "Eyeglass lenses/frame, only if actually present on assigned subject", "material": "Transparent curved lenses and polished frame", "box": [0.58, 0.25, 0.94, 0.48], "orientation": "Reassess from final pose; lens normals are not measured", "reflection_path": "F1 to the lens/frame to the taking camera only where normals support the return path", "highlight_action": "Small glints or narrow bands; both eyes remain readable; do not stamp matching centered dots", "expected_visibility": "conditional", "light_id": "F1", "confidence": "low", "evidence_ids": []},
+      {"id": "R2", "region": "Existing clear glass and polished tableware, if visible", "material": "Transparent glass and metal", "box": [0.1, 0.55, 0.8, 0.95], "orientation": "Curved glass and utensil surfaces vary in orientation", "reflection_path": "F1 to each real surface to the taking camera; response differs by material and normal", "highlight_action": "Compact local glints, retain transparency and material color; no blanket white paint or starbursts", "expected_visibility": "conditional", "light_id": "F1", "confidence": "low", "evidence_ids": ["E1"]}
+    ],
+    "facial_shadow_checks": [
+      {"region": "Nose and philtrum", "occluder": "Nose", "receiver": "Skin immediately below nose", "direction": "Short lower/image-left offset from F1", "action": "Retain attached nasal/nostril shading with ambient fill", "visibility": "visible", "light_id": "F1", "confidence": "low"},
+      {"region": "Lower lip and neck", "occluder": "Lower lip and chin", "receiver": "Skin under lip and under chin", "direction": "Downward with small image-left offset", "action": "Keep short anatomical self-shadows, not painted contour makeup", "visibility": "visible", "light_id": "F1", "confidence": "low"},
+      {"region": "Eyeglass frame and hairline when present", "occluder": "Frame and curls", "receiver": "Cheek and forehead", "direction": "Consistent with the same near-axis F1", "action": "Fine local shadows without hiding eyes or creating a second side light", "visibility": "uncertain", "light_id": "F1", "confidence": "low"}
+    ]
+  },
+  "postprocess": {"mode": "none"},
+  "acceptance": ["Same assigned identity with natural skin texture; no source-only prop leakage", "Original background FOV, anchor positions, ambient exposure and distant exterior remain stable", "Coherent near/subject/far flash response, plausible conditional specular highlights and short attached anatomical/contact shadows", "No limb collisions, detached shadows, warped tableware or invented opaque shadow receivers"]
+}
