@@ -40,7 +40,9 @@
 git clone https://github.com/Leipengpeng/qianjin-shaoye-photo-skills.git ~/.codex/skills/qianjin-shaoye-photo-skills
 ```
 
-或下载ZIP，将其中的 `qianjin-shaoye-photo-skills` 文件夹放进宿主的Skill目录，确保该文件夹下直接有 `SKILL.md`。在可发现本地Skill的会话中调用：
+也可以从 [版本下载页](https://github.com/Leipengpeng/qianjin-shaoye-photo-skills/releases/tag/v1.0.0) 下载附件 `qianjin-shaoye-photo-skills-v1.0.0.zip`，解压后将其中的 `qianjin-shaoye-photo-skills` 文件夹放进宿主的Skill目录。若下载的是GitHub自动生成的源码ZIP，解压目录可能带 `-main` 或版本后缀，请改为 `qianjin-shaoye-photo-skills`。确保目录结构为 `qianjin-shaoye-photo-skills/SKILL.md`，别套成两层同名文件夹。
+
+安装后确认宿主能识别该Skill；没有出现时，按宿主说明刷新技能或重新打开会话。然后在具备图片查看和图像生成/编辑能力的会话中调用：
 
 ```text
 使用 $qianjin-shaoye-photo-skills。
@@ -49,6 +51,35 @@ git clone https://github.com/Leipengpeng/qianjin-shaoye-photo-skills.git ~/.code
 ```
 
 只做普通入景时，直接说“不加额外闪光”；换装时补充衣服描述。工作资料建议放在Skill目录之外，原图可以躺着，别让它们跟着代码出远门。
+
+## 第一次用，照这四步
+
+**普通用户只需要上传图片、说清要求。下面的Python命令和JSON模板都是可选工具，不是开拍前的入学考试。** 安装Skill提供的是工作规则，宿主本身仍需能看图并调用图像生成/编辑工具。
+
+1. **确认技能已可调用。** 在宿主中能找到“千金少爷P图Skills”，或能识别 `$qianjin-shaoye-photo-skills`。
+2. **上传至少两张图。** 一张清晰的人像，一张想进入的环境；上传顺序可以调整，但请写明每张图的角色。可以直接发在当前对话里；支持本地文件的宿主也可以使用它能读取的图片路径。照片不用提交到这个GitHub仓库。
+3. **复制请求，先做一张。** 姿势、穿搭和闪光都是可选描述；想保留原衣服就明说，想要直闪就加“手机直闪”，没有要求闪光时匹配环境光。
+4. **查看图片与审图结果。** 默认每个环境一张照片，附0–100的主观融合参考分、主要不足；闪光任务另说明是否达到要求。需要修改时指出具体位置，例如“下巴阴影偏弱”“人物相对椅子太小”。原图和首稿会保留。
+
+```text
+使用 $qianjin-shaoye-photo-skills。
+图一是环境，图二是我的人像。
+请把我自然地放进去，保留环境视角和光色，先出一张。
+衣服保持原样，不加额外闪光；姿势请按场景合理安排。
+请交付成图、融合参考分和最主要的问题。
+```
+
+**多图时说清是哪种任务：**
+
+| 你想做的事 | 可以这样说 | 默认数量 |
+| --- | --- | --- |
+| 一个人进入多个环境 | “用这张自拍，分别放进这三个环境，每个环境独立出图。” | 3张 |
+| 多张同人自拍共同参考 | “这两张是同一个人，请共同参考，分别放进三个环境。” | 3张 |
+| 比较不同自拍是否稳定 | “这两张自拍分别测试三个环境，每次只用其中一张自拍，保留首稿。” | 6张首稿 |
+
+多个环境默认分别生成，只有明确要求合并环境时才另做合并规划。联合参考和逐张测试是两种任务，不能把联合参考的结果拿来充当单张自拍的稳定性证明。
+
+如果助手提示缺少图片，补齐人像或环境；如果提示找不到Skill，检查安装目录和技能发现状态；如果宿主没有图像工具，只能交付待执行简报，不能生成照片。融合参考分属于主观审图意见，不是照片真实概率。
 
 ## 三种常用请求
 
@@ -78,9 +109,9 @@ git clone https://github.com/Leipengpeng/qianjin-shaoye-photo-skills.git ~/.code
 
 多参考联合生成请明确说“这几张是同一人，请共同参考”；这与逐张稳定性实验是两种任务。
 
-## 离线工具怎么跑
+## 开发者与可选离线工具
 
-需要工具辅助编译、计算或追色时安装依赖：
+普通对话出图不要求用户自己运行这些命令。需要自行编译简报、辅助计算、追色或验证工具链时，再安装依赖：
 
 ```bash
 python -m pip install -r requirements.txt
@@ -96,7 +127,7 @@ python -m unittest discover -s tests -v
 
 Windows请把示例绝对路径换成实际路径并加引号。生成的 `image_prompt.txt` 是给图像工具的简报，`compiled_brief.json` 记录输入顺序与哈希。**上述命令不会生成照片**；合成线条通过测试，也不代表真人合成已经通过审美验收。
 
-正式使用前，复制 [简报模板](examples/direct_scene_brief.template.json)，替换实际文件路径，并根据看图结果重写所有环境相关字段。模板里的桌子不是任何场景都能用的万能家具。
+只有自行运行离线编译器时，才需要复制 [简报模板](examples/direct_scene_brief.template.json)，替换实际文件路径，并根据看图结果重写所有环境相关字段。普通用户直接在对话中提供照片与要求，由助手组织简报即可。模板里的桌子不是任何场景都能用的万能家具。
 
 | 工具 | 用途 |
 | --- | --- |
