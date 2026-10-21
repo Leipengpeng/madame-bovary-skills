@@ -2,6 +2,12 @@
 
 *Madame Bovary · 包法利夫人*
 
+> Elle confondait, dans son désir, les sensualités du luxe avec les joies du cœur, l’élégance des habitudes et les délicatesses du sentiment.
+>
+> 在她的渴望中，奢华带来的感官享受与内心的欢悦混为一谈；生活方式的优雅，也与情感本身的细腻混为一谈。
+
+——居斯塔夫·福楼拜，《包法利夫人》第一部第九章。[法文原文](https://fr.wikisource.org/wiki/Page:Flaubert_-_Madame_Bovary,_Conard,_1910.djvu/107)；中文为本项目自译。
+
 **行李还没收，旅行写真先有了。**
 
 不一定要先飞到某个地方，才能拥有一组以那里为背景的旅行写真。给一张自拍和一张环境参考图，让AI把你放进想去的风景：街边咖啡、海边落日、美术馆里的片刻停留。精致亮丽的生活，也可以先从一张图开始创作。

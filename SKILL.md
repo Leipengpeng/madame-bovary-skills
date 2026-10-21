@@ -5,6 +5,12 @@ description: 用用户提供的一张或多张同人人像与环境参考图创�
 
 # 名媛型男 Skills · Madame Bovary
 
+> Elle confondait, dans son désir, les sensualités du luxe avec les joies du cœur, l’élégance des habitudes et les délicatesses du sentiment.
+>
+> 在她的渴望中，奢华带来的感官享受与内心的欢悦混为一谈；生活方式的优雅，也与情感本身的细腻混为一谈。
+
+——居斯塔夫·福楼拜，《包法利夫人》第一部第九章。[法文原文](https://fr.wikisource.org/wiki/Page:Flaubert_-_Madame_Bovary,_Conard,_1910.djvu/107)；中文为本项目自译。
+
 把人放进想去的风景，也把人放进光里。行李可以还没收，AI旅行写真可以先有；椅子、鼻影和透视请正常上班。
 
 ## 入口与默认行为
