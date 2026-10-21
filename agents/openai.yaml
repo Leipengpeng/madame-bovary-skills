@@ -1,7 +1,7 @@
 interface:
-  display_name: "千金少爷P图Skills"
-  short_description: "保留人物辨识度与环境视角，处理尺度、受光、手机直闪和阴影，再给融合参考分。"
-  default_prompt: "使用 $qianjin-shaoye-photo-skills，把指定人像自然放进参考环境，保留原视角与光色，按我的要求处理闪光并审图评分。"
+  display_name: "名媛型男 Skills"
+  short_description: "用自拍与环境图创作AI旅行写真和精致生活影像，保留人物辨识度，按需直闪并审图。"
+  default_prompt: "使用 $madame-bovary-skills，用我的人像和环境参考图创作自然的AI旅行写真，保留人物辨识度、原视角与光色，按我的要求处理闪光并审图评分。"
 
 policy:
   allow_implicit_invocation: true
