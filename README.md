@@ -1,10 +1,14 @@
-# 千金少爷P图Skills
+# 名媛型男 Skills
 
-**一张自拍，一张环境图，让人合理地出现在那里。**
+*Madame Bovary · 包法利夫人*
 
-人可以没去过，透视不能没上过班。这个Skill把身份、尺度、机位、光源、阴影和反光分别说清楚，再交给图像模型生成，最后认真看一遍成图。
+**行李还没收，旅行写真先有了。**
 
-适合本人入景、场景写真、千金少爷风格、自然手机直闪，以及“换张自拍会不会突然换个人”的稳定性测试。名字很有排面，工作内容很朴素：把人、椅子和光安排明白。
+不一定要先飞到某个地方，才能拥有一组以那里为背景的旅行写真。给一张自拍和一张环境参考图，让AI把你放进想去的风景：街边咖啡、海边落日、美术馆里的片刻停留。精致亮丽的生活，也可以先从一张图开始创作。
+
+你负责挑风景、想穿搭，这个Skill负责把人、透视、光线和阴影安排明白。人在沙发上，几何也得正常上班。
+
+成图属于**AI合成写真**。它尽量保留人物辨识度、环境视角与光色，按需加入自然手机直闪，再认真审图，让这趟想象中的出发自然好看。也支持日常场景入景、指定换装，以及“换张自拍会不会突然换个人”的稳定性测试。
 
 ## 它会做什么
 
@@ -18,7 +22,7 @@
 | 检查换自拍的稳定性 | 同设置逐张单参考出图，保留首轮结果，不暗中挑片 |
 | 按需追色 | 用对应背景区域统计原环境光色，再做有记录的固定变换 |
 
-千金少爷是审美方向。它不会从长相鉴定存款，也不会因为穿了黑衬衫就顺便给你颁发董事长任命书。
+名媛、型男是照片的审美方向。它不会从长相鉴定存款，也不会因为穿了黑衬衫就顺便给你颁发董事长任命书。
 
 ## 固定下来的默认流程
 
@@ -37,15 +41,17 @@
 将仓库克隆到本地Skill目录；下面以Codex默认目录为例。若设置了 `CODEX_HOME`，放到它的 `skills` 子目录。已有同名目录时先检查，不要覆盖。
 
 ```bash
-git clone https://github.com/Leipengpeng/qianjin-shaoye-photo-skills.git ~/.codex/skills/qianjin-shaoye-photo-skills
+git clone https://github.com/Leipengpeng/madame-bovary-skills.git ~/.codex/skills/madame-bovary-skills
 ```
 
-也可以从 [版本下载页](https://github.com/Leipengpeng/qianjin-shaoye-photo-skills/releases/tag/v1.0.0) 下载附件 `qianjin-shaoye-photo-skills-v1.0.0.zip`，解压后将其中的 `qianjin-shaoye-photo-skills` 文件夹放进宿主的Skill目录。若下载的是GitHub自动生成的源码ZIP，解压目录可能带 `-main` 或版本后缀，请改为 `qianjin-shaoye-photo-skills`。确保目录结构为 `qianjin-shaoye-photo-skills/SKILL.md`，别套成两层同名文件夹。
+也可以从 [版本下载页](https://github.com/Leipengpeng/madame-bovary-skills/releases/tag/v1.0.1) 下载附件 `madame-bovary-skills-v1.0.1.zip`，解压后将其中的 `madame-bovary-skills` 文件夹放进宿主的Skill目录。若下载的是GitHub自动生成的源码ZIP，解压目录可能带 `-main` 或版本后缀，请改为 `madame-bovary-skills`。确保目录结构为 `madame-bovary-skills/SKILL.md`，别套成两层同名文件夹。
+
+旧版用户请将新版作为独立目录安装，并停用旧版Skill，避免宿主同时发现两份规则。此版本统一了品牌、调用名和使用说明；制作流程与离线算法沿用已验证版本。
 
 安装后确认宿主能识别该Skill；没有出现时，按宿主说明刷新技能或重新打开会话。然后在具备图片查看和图像生成/编辑能力的会话中调用：
 
 ```text
-使用 $qianjin-shaoye-photo-skills。
+使用 $madame-bovary-skills。
 图一是环境，图二是我的身份参考。
 把我自然地放进环境里，保留原视角和背景光色，做手机直闪，先生成一张。
 ```
@@ -56,13 +62,13 @@ git clone https://github.com/Leipengpeng/qianjin-shaoye-photo-skills.git ~/.code
 
 **普通用户只需要上传图片、说清要求。下面的Python命令和JSON模板都是可选工具，不是开拍前的入学考试。** 安装Skill提供的是工作规则，宿主本身仍需能看图并调用图像生成/编辑工具。
 
-1. **确认技能已可调用。** 在宿主中能找到“千金少爷P图Skills”，或能识别 `$qianjin-shaoye-photo-skills`。
+1. **确认技能已可调用。** 在宿主中能找到“名媛型男 Skills”，或能识别 `$madame-bovary-skills`。
 2. **上传至少两张图。** 一张清晰的人像，一张想进入的环境；上传顺序可以调整，但请写明每张图的角色。可以直接发在当前对话里；支持本地文件的宿主也可以使用它能读取的图片路径。照片不用提交到这个GitHub仓库。
 3. **复制请求，先做一张。** 姿势、穿搭和闪光都是可选描述；想保留原衣服就明说，想要直闪就加“手机直闪”，没有要求闪光时匹配环境光。
 4. **查看图片与审图结果。** 默认每个环境一张照片，附0–100的主观融合参考分、主要不足；闪光任务另说明是否达到要求。需要修改时指出具体位置，例如“下巴阴影偏弱”“人物相对椅子太小”。原图和首稿会保留。
 
 ```text
-使用 $qianjin-shaoye-photo-skills。
+使用 $madame-bovary-skills。
 图一是环境，图二是我的人像。
 请把我自然地放进去，保留环境视角和光色，先出一张。
 衣服保持原样，不加额外闪光；姿势请按场景合理安排。
@@ -144,7 +150,7 @@ Windows请把示例绝对路径换成实际路径并加引号。生成的 `image
 ## 文件导航
 
 ```text
-qianjin-shaoye-photo-skills/
+madame-bovary-skills/
 ├── SKILL.md                 模型执行入口
 ├── README.md                安装与使用
 ├── WORKFLOW.md              冻结流程与分支
@@ -166,4 +172,4 @@ qianjin-shaoye-photo-skills/
 
 当前分发包没有任何真人照片、私人环境图或历史成图。公开样例只验证离线工具链；验证记录见 [VALIDATION.md](VALIDATION.md)，输入与发布边界见 [PRIVACY.md](PRIVACY.md)。
 
-贵气可以自由发挥，重力和几何请正常上班。
+想象可以先出发，重力和几何请正常上班。
